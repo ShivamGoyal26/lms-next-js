@@ -6,13 +6,14 @@ export const listCourses = async (
   res: Response
 ): Promise<void> => {
   const { category } = req.query;
+  console.log("<<", req.query);
   try {
     const courses =
       category && category !== "all"
         ? await Course.scan("category").eq(category).exec()
         : await Course.scan().exec();
 
-    res.json({
+    res.status(200).json({
       message: "Courses fetched successfully",
       data: courses,
     });
@@ -33,7 +34,7 @@ export const getCourse = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
-    res.json({
+    res.status(200).json({
       message: "Course fetched successfully",
       data: course,
     });

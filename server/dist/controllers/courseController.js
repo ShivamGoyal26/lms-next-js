@@ -16,11 +16,12 @@ exports.getCourse = exports.listCourses = void 0;
 const courseModel_1 = __importDefault(require("../models/courseModel"));
 const listCourses = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { category } = req.query;
+    console.log("<<", req.query);
     try {
         const courses = category && category !== "all"
             ? yield courseModel_1.default.scan("category").eq(category).exec()
             : yield courseModel_1.default.scan().exec();
-        res.json({
+        res.status(200).json({
             message: "Courses fetched successfully",
             data: courses,
         });
@@ -40,7 +41,7 @@ const getCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             res.json({ message: "course not found" });
             return;
         }
-        res.json({
+        res.status(200).json({
             message: "Course fetched successfully",
             data: course,
         });
